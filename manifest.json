@@ -36,6 +36,13 @@
       "tier": "pro"
     },
     {
+      "slug": "compliance-tracker",
+      "name": "compliance-tracker",
+      "description": "Track regulatory requirements, policy deadlines, and compliance status across your business. Surface upcoming obligations and flag risks before they become problems.",
+      "category": "core",
+      "tier": "pro"
+    },
+    {
       "slug": "crm-in-a-box",
       "name": "crm-in-a-box",
       "description": "Bootstrap and manage an open, file-based CRM using the CRM-in-a-Box protocol (contacts, pipeline, interactions as NDJSON). Use when setting up a new CRM for a company, logging contacts/leads, updating deal stages, or recording interactions \u2014 all without any SaaS dependency.",
@@ -55,6 +62,13 @@
       "description": "# CRM Pipeline",
       "category": "core",
       "tier": "pro"
+    },
+    {
+      "slug": "customer-pulse",
+      "name": "customer-pulse",
+      "description": "Monitor customer sentiment, track feedback patterns, and surface churn signals. Keep a finger on the pulse of customer satisfaction across all touchpoints.",
+      "category": "core",
+      "tier": "starter"
     },
     {
       "slug": "day-of-operations",
@@ -232,6 +246,20 @@
       "tier": "starter"
     },
     {
+      "slug": "morning-briefing",
+      "name": "morning-briefing",
+      "description": "Daily morning briefing that summarizes priorities, calendar, pending tasks, and key metrics. Delivered proactively to start each day with clarity.",
+      "category": "core",
+      "tier": "starter"
+    },
+    {
+      "slug": "onboarding",
+      "name": "onboarding",
+      "description": "First-boot onboarding interview that learns the founder's business, goals, and working style. Generates the Business OS (USER.md, business context, initial tasks) from a guided conversation.",
+      "category": "core",
+      "tier": "starter"
+    },
+    {
       "slug": "post-event-debrief",
       "name": "post-event-debrief",
       "description": "# Post-Event Debrief",
@@ -244,6 +272,13 @@
       "description": "# Relationship Tracking",
       "category": "core",
       "tier": "starter"
+    },
+    {
+      "slug": "risk-assessment",
+      "name": "risk-assessment",
+      "description": "Identify, evaluate, and monitor business risks across operations, finance, and strategy. Generate risk matrices and mitigation plans.",
+      "category": "core",
+      "tier": "pro"
     },
     {
       "slug": "sales-outreach",
@@ -263,6 +298,13 @@
       "slug": "social-media-management",
       "name": "social-media-management",
       "description": "# Social Media Management",
+      "category": "core",
+      "tier": "pro"
+    },
+    {
+      "slug": "sop-generator",
+      "name": "sop-generator",
+      "description": "Generate standard operating procedures from conversations and observations. Document repeatable processes so your team can execute consistently.",
       "category": "core",
       "tier": "pro"
     },
@@ -293,6 +335,13 @@
       "description": "# Vendor Management",
       "category": "events",
       "tier": "managed"
+    },
+    {
+      "slug": "wellbeing-coach",
+      "name": "wellbeing-coach",
+      "description": "Monitor founder wellbeing signals and offer proactive support. Track energy levels, workload balance, and burnout risk with gentle nudges and practical suggestions.",
+      "category": "core",
+      "tier": "starter"
     }
   ]
 }
