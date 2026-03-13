@@ -20,9 +20,10 @@ set -euo pipefail
 #   5. Prints next steps
 # ============================================================
 
-VERSION="1.0.0"
+VERSION="1.1.0"
 REPO_URL="https://github.com/flynndavid/operator.git"
 REPO_BRANCH="main"
+VALIDATE_URL="https://operator-landing-alpha.vercel.app/api/validate-key"
 
 # --- Colors ---
 RED='\033[0;31m'
@@ -46,7 +47,8 @@ CLIENT_NAME=""
 CONTACT_NAME=""
 AGENT_NAME=""
 CONTACT_TIMEZONE=""
-PROFILE="starter"
+LICENSE_KEY=""
+PROFILE=""
 VERTICAL=""
 WORKSPACE_DIR=""
 SKIP_INTERACTIVE=false
@@ -58,6 +60,7 @@ while [[ $# -gt 0 ]]; do
     --contact)     CONTACT_NAME="$2"; shift 2 ;;
     --agent-name)  AGENT_NAME="$2"; shift 2 ;;
     --timezone)    CONTACT_TIMEZONE="$2"; shift 2 ;;
+    --key)         LICENSE_KEY="$2"; shift 2 ;;
     --profile)     PROFILE="$2"; shift 2 ;;
     --vertical)    VERTICAL="$2"; shift 2 ;;
     --workspace)   WORKSPACE_DIR="$2"; shift 2 ;;
@@ -68,11 +71,12 @@ while [[ $# -gt 0 ]]; do
       echo "Usage: curl -sL https://operator-landing-alpha.vercel.app/install.sh | bash"
       echo ""
       echo "Options:"
+      echo "  --key KEY           License key from purchase (determines tier)"
       echo "  --client NAME       Your business name"
       echo "  --contact NAME      Your name"
       echo "  --agent-name NAME   Name for your AI agent (default: Operator)"
       echo "  --timezone TZ       Your timezone (default: auto-detected)"
-      echo "  --profile TIER      starter|pro|managed (default: starter)"
+      echo "  --profile TIER      starter|pro|managed (default: starter, overridden by --key)"
       echo "  --vertical TYPE     Optional: festivals, home-services, saas"
       echo "  --workspace DIR     OpenClaw workspace path (default: ~/.openclaw/workspace)"
       echo "  --yes               Skip confirmations"
@@ -149,6 +153,55 @@ if [[ -z "$WORKSPACE_DIR" ]]; then
   else
     WORKSPACE_DIR="$HOME/.openclaw/workspace"
   fi
+fi
+
+# ============================================================
+# License Key Validation
+# ============================================================
+if [[ -n "$LICENSE_KEY" ]]; then
+  header "Validating license key..."
+  
+  if command -v curl &>/dev/null; then
+    VALIDATE_RESPONSE=$(curl -s "${VALIDATE_URL}?key=${LICENSE_KEY}" 2>/dev/null || echo '{"valid":false,"error":"network"}')
+    
+    KEY_VALID=$(echo "$VALIDATE_RESPONSE" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('valid','false'))" 2>/dev/null || echo "false")
+    
+    if [[ "$KEY_VALID" == "True" ]] || [[ "$KEY_VALID" == "true" ]]; then
+      KEY_TIER=$(echo "$VALIDATE_RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin).get('tier','starter'))" 2>/dev/null || echo "starter")
+      KEY_EMAIL=$(echo "$VALIDATE_RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin).get('email',''))" 2>/dev/null || echo "")
+      
+      ok "License key valid — ${KEY_TIER} tier"
+      
+      # Override profile with the tier from the license key
+      PROFILE="$KEY_TIER"
+      
+      if [[ -n "$KEY_EMAIL" ]]; then
+        dim "  Registered to: ${KEY_EMAIL}"
+      fi
+    else
+      KEY_ERROR=$(echo "$VALIDATE_RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin).get('error','Invalid key'))" 2>/dev/null || echo "Invalid key")
+      err "License key validation failed: ${KEY_ERROR}"
+      echo ""
+      echo "  Get a license key at: https://operator-landing-alpha.vercel.app/#pricing (Starter $199 / Pro $249/mo)"
+      echo "  Or install the free starter tier without a key."
+      echo ""
+      printf "${BOLD}Continue with free starter tier? (Y/n):${NC} "
+      if [[ -t 0 ]]; then
+        read -r fallback
+        if [[ "$fallback" =~ ^[Nn] ]]; then
+          echo "Cancelled."
+          exit 1
+        fi
+      fi
+      PROFILE="starter"
+      warn "Continuing with starter tier (12 skills)"
+    fi
+  else
+    warn "curl not found — skipping key validation, defaulting to starter tier"
+    PROFILE="starter"
+  fi
+elif [[ -z "$PROFILE" ]]; then
+  PROFILE="starter"
 fi
 
 # ============================================================
