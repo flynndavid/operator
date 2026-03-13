@@ -162,7 +162,7 @@ ask() {
   local prompt="$1"
   local default="$2"
   local var_name="$3"
-  local current_val="${!var_name}"
+  local current_val="${!var_name:-}"
 
   if [[ -n "$current_val" ]]; then
     return
