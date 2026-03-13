@@ -1,43 +1,53 @@
-# TOOLS.md — Local Setup Notes
+# TOOLS.md — Integration Notes
 
-> Client-specific tool configuration, credentials notes, and environment details.
-> Skills define _how_ tools work. This file is for _your_ specifics.
+_Client-specific tool configuration and environment details. Skills define how tools work. This file is for the specifics of {{CLIENT_NAME}}'s setup._
 
 ## Communication Channel
 
-- **Primary:** {{CHANNEL_TYPE}}
+- **Primary channel:** {{CHANNEL_TYPE}}
 - **Channel/Group:** {{CHANNEL_ID}}
-- **Client contact:** {{CONTACT_NAME}}
+- **Founder contact:** {{CONTACT_NAME}}
 
-## Integrations
+## Accounting Hub
 
-_Add client-specific integration details here during onboarding:_
+- **Provider:** {{ACCOUNTING_PROVIDER}}
+- **Access level:** {{ACCOUNTING_ACCESS}}
+- **Notes:** {{ACCOUNTING_NOTES}}
 
-### Email
-- Provider: (Gmail / Outlook / etc.)
-- Account: (if agent has access)
+## Productivity Hub
 
-### Calendar
-- Provider: (Google Calendar / Outlook / etc.)
-- Calendars to monitor: 
+- **Suite:** {{PRODUCTIVITY_SUITE}}
+- **Email:** {{EMAIL_PROVIDER}}
+- **Calendar:** {{CALENDAR_PROVIDER}}
+- **Documents:** {{DOCS_PROVIDER}}
+- **Notes:** {{PRODUCTIVITY_NOTES}}
 
-### Project Management
-- Tool: (Asana / Trello / Notion / etc.)
-- Workspace/Board: 
+## CRM / Pipeline
 
-### Financial
-- Tool: (QuickBooks / Wave / Stripe / etc.)
-- Access level: 
+- **Tool:** {{CRM_TOOL}}
+- **Pipeline stages:** {{CRM_STAGES}}
+- **Notes:** {{CRM_NOTES}}
 
-### Social Media
-- Platforms: 
-- Accounts: 
+## Payments
 
-### Other Tools
-_List any other tools the client uses that the agent should be aware of._
+- **Provider:** {{PAYMENTS_PROVIDER}}
+- **Access level:** {{PAYMENTS_ACCESS}}
+- **Notes:** {{PAYMENTS_NOTES}}
 
----
+## Social & Marketing
 
-## Notes
+- **Platforms:** {{SOCIAL_PLATFORMS}}
+- **Accounts:** {{SOCIAL_ACCOUNTS}}
+- **Notes:** {{SOCIAL_NOTES}}
 
-_Add environment-specific notes, quirks, and tips here as you learn the client's setup._
+## Custom Tools
+
+_Tools built specifically for this business. For each, document why it was built, what it does, and how it works._
+
+| Tool | Purpose | Built On | Status |
+|------|---------|----------|--------|
+| | | | |
+
+## Environment Notes
+
+_Quirks, workarounds, and tips learned from working with this client's setup._

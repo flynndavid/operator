@@ -1,13 +1,17 @@
 {
   "name": "starter",
   "skills": [
-    "founder-coach",
     "crm-in-a-box",
-    "task-management",
+    "customer-pulse",
     "email-drafting",
     "financial-overview",
-    "strategic-advisor",
+    "founder-coach",
     "meeting-prep",
-    "relationship-tracking"
+    "morning-briefing",
+    "onboarding",
+    "relationship-tracking",
+    "strategic-advisor",
+    "task-management",
+    "wellbeing-coach"
   ]
 }

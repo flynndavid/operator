@@ -6,9 +6,11 @@
     "budget-tracking",
     "business-development",
     "community-building",
+    "compliance-tracker",
     "crm-in-a-box",
     "crm-manager",
     "crm-pipeline",
+    "customer-pulse",
     "day-of-operations",
     "email-drafting",
     "event-marketing",
@@ -34,14 +36,19 @@
     "marketing-seo-strategy",
     "marketing-x-twitter",
     "meeting-prep",
+    "morning-briefing",
+    "onboarding",
     "post-event-debrief",
     "relationship-tracking",
+    "risk-assessment",
     "sales-outreach",
     "sales-pipeline",
     "social-media-management",
+    "sop-generator",
     "sponsorship-management",
     "strategic-advisor",
     "task-management",
-    "vendor-management"
+    "vendor-management",
+    "wellbeing-coach"
   ]
 }

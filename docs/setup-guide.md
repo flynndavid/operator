@@ -1,201 +1,224 @@
-# Setup Guide — Deploying a New Client Instance
+# Setup Guide — Deploying Operator on a New OpenClaw Instance
+
+This guide walks you through deploying Operator from zero to a running agent.
 
 ## Prerequisites
 
+- **Node.js** 20+ installed
 - **OpenClaw** installed: `npm i -g openclaw`
-- **Node.js** 20+
-- **Git** access to this repo
-- **Slack Bot Token** or **Telegram Bot Token** for the client channel
-- **LLM API key** (OpenAI or Anthropic)
+- **Git**, **jq**, **python3** available on PATH
+- **LLM API key** — Anthropic (recommended) or OpenAI
+- **Communication channel** configured — Slack bot token, Discord bot, or Telegram bot
 
-## Step 1: Provision the Instance
+## Step 1: Clone the Repo
 
 ```bash
-# Clone and set up a new client workspace
-./deploy/provision.sh \
-  --client "Sunrise Festival" \
+git clone https://github.com/flynndavid/operator.git
+cd operator
+```
+
+If you already have the repo cloned, make sure you're on the latest:
+
+```bash
+git pull origin main
+```
+
+## Step 2: Preview the Deployment (Optional)
+
+```bash
+./template/setup.sh \
+  --client "Acme Co" \
+  --contact "Jane Smith" \
+  --profile starter \
+  --dry-run
+```
+
+This shows exactly what directories, files, and placeholders will be created — without making any changes.
+
+## Step 3: Provision the Instance
+
+```bash
+./template/setup.sh \
+  --client "Acme Co" \
   --contact "Jane Smith" \
   --timezone "America/New_York" \
-  --agent-name "Maven" \
-  --vertical festivals-events \
-  --channel slack
-
-# This creates: deployments/sunrise-festival/
+  --agent-name "Scout" \
+  --channel slack \
+  --profile starter
 ```
 
-The provisioning script:
-1. Copies the template to a new deployment directory
-2. Applies the vertical overlay (festivals-events)
-3. Replaces all `{{PLACEHOLDERS}}` with provided values
-4. Generates `openclaw.json` from the template
-5. Creates the workspace directory structure
+This creates `deployments/acme-co/` with:
+- Agent personality files (SOUL.md, AGENTS.md, USER.md, etc.)
+- BOOTSTRAP.md (triggers onboarding on first boot)
+- Selected skills based on the tier profile
+- openclaw.json from the template
+- Empty directories for business context, memory, tasks, and secrets
 
-## Step 2: Configure the Client Profile
+### Using a vertical overlay
 
-Edit `deployments/sunrise-festival/USER.md`:
-
-```markdown
-# USER.md — About Your Human
-
-- **Name:** Jane Smith
-- **Business:** Sunrise Festival
-- **Role:** Festival Director
-- **Timezone:** America/New_York
-- **Communication preference:** Slack, direct and concise
-
-## Business Context
-
-- **Industry:** Festivals & Live Events
-- **Business type:** Annual music festival
-- **Size:** 5-person core team, 50+ contractors
-- **Location:** Austin, TX
-
-## What They Need From You
-
-- Keep the event timeline on track
-- Manage vendor contracts and follow-ups
-- Draft marketing content for social and email
-- Track the budget and flag overruns
-- Coordinate day-of logistics
-
-## Working Style
-
-- Fast-paced, prefers bullet points over paragraphs
-- Checks Slack mornings and evenings
-- Hates being surprised — surface risks early
+```bash
+./template/setup.sh \
+  --client "Sunrise Festival" \
+  --contact "Jane Smith" \
+  --profile managed \
+  --vertical festivals
 ```
 
-## Step 3: Set Up Communication Channel
+### Using a remote skills repo
 
-### Slack
-
-1. Create a Slack bot in the client's workspace (or use a shared app)
-2. Get the Bot Token (`xoxb-...`)
-3. Invite the bot to the appropriate channel or DM
-4. Update `openclaw.json`:
-
-```json
-{
-  "channels": {
-    "slack": {
-      "enabled": true,
-      "provider": "slack",
-      "token": "xoxb-...",
-      "appToken": "xapp-...",
-      "defaultChannel": "CHANNEL_ID"
-    }
-  }
-}
+```bash
+./template/setup.sh \
+  --client "Acme Co" \
+  --contact "Jane Smith" \
+  --skills-repo https://github.com/flynndavid/operator.git
 ```
 
-### Telegram
+## Step 4: Configure openclaw.json
 
-1. Create a bot via @BotFather
-2. Get the Bot Token
-3. Update `openclaw.json`:
+Edit `deployments/acme-co/openclaw.json`:
 
-```json
-{
-  "channels": {
-    "telegram": {
-      "enabled": true,
-      "provider": "telegram",
-      "token": "BOT_TOKEN",
-      "allowedChats": ["CHAT_ID"]
-    }
-  }
-}
-```
-
-## Step 4: Configure LLM
-
-Add the LLM API key to `openclaw.json`:
+### Set the API key
 
 ```json
 {
   "ai": {
     "provider": "anthropic",
     "model": "claude-sonnet-4-20250514",
-    "apiKey": "sk-ant-..."
+    "apiKey": "sk-ant-YOUR-KEY-HERE"
   }
 }
 ```
 
-**Recommended models by use case:**
-- **Primary:** Claude Sonnet 4 or GPT-4o (good balance of cost/quality)
-- **Heartbeats:** Claude Haiku or GPT-4o-mini (cheaper for routine checks)
-- **Complex planning:** Claude Opus or GPT-4 (when needed)
+**Recommended models:**
+- **Primary:** Claude Sonnet 4 (good balance of cost/quality)
+- **Heartbeats:** Claude Haiku 4.5 (cheaper for routine checks)
+- **Complex planning:** Claude Opus 4 (when needed)
 
-## Step 5: Set Up Heartbeats
+### Configure communication channel
 
-Configure proactive monitoring in `openclaw.json`:
-
+**Slack:**
 ```json
 {
-  "heartbeat": {
-    "enabled": true,
-    "intervalMinutes": 30,
-    "model": "anthropic/claude-haiku-4-5"
+  "channels": {
+    "slack": {
+      "enabled": true,
+      "provider": "slack",
+      "token": "xoxb-YOUR-BOT-TOKEN",
+      "appToken": "xapp-YOUR-APP-TOKEN",
+      "defaultChannel": "CHANNEL_ID"
+    }
   }
 }
 ```
 
-The agent will check in every 30 minutes using the cheaper model, following the rules in `HEARTBEAT.md`.
+**Discord:**
+```json
+{
+  "channels": {
+    "discord": {
+      "enabled": true,
+      "provider": "discord",
+      "token": "YOUR-BOT-TOKEN"
+    }
+  }
+}
+```
 
-## Step 6: Start the Agent
+**Telegram:**
+```json
+{
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "provider": "telegram",
+      "token": "YOUR-BOT-TOKEN",
+      "allowedChats": ["CHAT_ID"]
+    }
+  }
+}
+```
+
+## Step 5: Start the Agent
 
 ```bash
-cd deployments/sunrise-festival/
+cd deployments/acme-co
 openclaw gateway start
 ```
 
 For production (auto-restart on failure):
-
 ```bash
-# Create systemd service (Linux VPS)
-sudo cp deploy/openclaw-client.service /etc/systemd/system/openclaw-sunrise-festival.service
-# Edit the service file with correct paths
-sudo systemctl enable openclaw-sunrise-festival
-sudo systemctl start openclaw-sunrise-festival
+# macOS — use a LaunchAgent
+# Linux — use systemd
+# See OpenClaw docs for service configuration
 ```
 
-## Step 7: Onboarding Conversation
+## Step 6: First Boot — Onboarding Interview
 
-The agent's first message to the client should be a warm introduction. It will:
+On first boot, the agent detects `BOOTSTRAP.md` and starts an onboarding conversation:
 
-1. Introduce itself by name
-2. Explain what it can do
-3. Ask about immediate priorities
-4. Start building context
+1. **Introduces itself** by name
+2. **Asks 5-10 questions** about the business, priorities, team, and working style
+3. **Generates the Business OS**:
+   - `business/context/overview.md` — Business summary
+   - `business/context/team.md` — Key people
+   - `business/context/priorities.md` — Current focus areas
+   - Updates `USER.md` with real details
+   - Creates initial tasks in `tasks/active/`
+4. **Renames** `BOOTSTRAP.md` → `BOOTSTRAP.done.md`
+5. **Confirms** what it set up and what to expect going forward
 
-Example first message:
-> Hey Jane! 👋 I'm Maven, your AI co-founder for Sunrise Festival. I'm here to help you stay on top of everything — timelines, vendors, marketing, budget, logistics. I learn your business over time, so the more we work together, the better I get.
->
-> To get started, what's the most pressing thing on your plate right now?
+After onboarding, the agent operates normally — responding to messages, running heartbeat checks, and proactively surfacing relevant information.
 
-## Verification Checklist
+## Step 7: Verify
 
-- [ ] `USER.md` filled with real client details
-- [ ] Communication channel connected and agent responsive
-- [ ] Heartbeat running (check logs for heartbeat acks)
-- [ ] Agent introduces itself naturally
-- [ ] Memory system working (agent remembers context across sessions)
-- [ ] Client can reach the agent and get helpful responses
+```bash
+# Check gateway health
+openclaw doctor
+
+# Tail logs
+openclaw gateway logs
+
+# Verify heartbeat is running (look for heartbeat entries in logs)
+```
+
+### Verification checklist
+
+- [ ] Agent responds in the configured channel
+- [ ] Onboarding interview completes and Business OS files are created
+- [ ] `BOOTSTRAP.md` is renamed to `BOOTSTRAP.done.md`
+- [ ] Heartbeat fires on schedule (check logs)
+- [ ] Memory system works (agent remembers context across sessions)
+- [ ] Morning briefing arrives (if using starter+ tier)
 
 ## Troubleshooting
 
-### Agent not responding in Slack
-- Check bot token is valid: `openclaw status`
-- Verify bot is invited to the channel
-- Check `openclaw.json` channel configuration
-- Review gateway logs: `openclaw gateway logs`
+### Agent not responding
+
+1. Check that `openclaw.json` has valid API key and channel tokens
+2. Verify the bot is invited to the correct channel
+3. Check logs: `openclaw gateway logs`
+4. Run health check: `openclaw doctor`
+
+### Onboarding didn't trigger
+
+1. Check that `BOOTSTRAP.md` exists in the workspace root
+2. Check that the `onboarding` skill is installed in `skills/onboarding/`
+3. Review logs for errors during first message processing
 
 ### Heartbeats not firing
-- Verify `heartbeat.enabled: true` in config
-- Check `heartbeat.intervalMinutes` is set
-- Review gateway logs for heartbeat scheduling
+
+1. Verify `heartbeat.enabled: true` in `openclaw.json`
+2. Check `heartbeat.intervalMinutes` is set (default: 30)
+3. Check logs for heartbeat scheduling entries
+
+### Skills not working
+
+1. Verify the skill directory exists in `skills/<name>/`
+2. Check that `skill.md` exists inside the skill directory
+3. Confirm the skill is listed in the profile used during setup
 
 ### Agent losing context
-- Check that `MEMORY.md` and `memory/` directory exist and are writable
-- Verify the workspace path in `openclaw.json` points to the right directory
-- Check daily note files are being created
+
+1. Check that `memory/` directory exists and is writable
+2. Verify workspace path in `openclaw.json` points to the correct directory
+3. Check that MEMORY.md exists
