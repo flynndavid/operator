@@ -1,0 +1,48 @@
+# Docker Compose for AI Co-founder Instance
+# Usage: docker compose up -d
+#
+# Environment variables (set in .env or pass directly):
+#   INSTANCE_NAME   - Client slug (e.g., sunrise-festival)
+#   WORKSPACE_PATH  - Path to the client workspace on host
+#   OPENCLAW_PORT   - Port for the gateway (default: 3000)
+
+version: '3.8'
+
+services:
+  openclaw:
+    image: node:20-slim
+    container_name: "cofounder-${INSTANCE_NAME:-default}"
+    restart: unless-stopped
+    working_dir: /workspace
+    volumes:
+      - "${WORKSPACE_PATH:-.}:/workspace"
+    environment:
+      - NODE_ENV=production
+    command: >
+      sh -c "
+        npm install -g openclaw &&
+        openclaw gateway start --foreground
+      "
+    ports:
+      - "${OPENCLAW_PORT:-3000}:3000"
+    healthcheck:
+      test: ["CMD", "openclaw", "status"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Optional: monitoring sidecar
+  # Uncomment when you need centralized logging
+  # 
+  # log-forwarder:
+  #   image: fluent/fluent-bit:latest
+  #   volumes:
+  #     - /var/log/openclaw:/var/log/openclaw:ro
+  #   depends_on:
+  #     - openclaw

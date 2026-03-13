@@ -1,0 +1,46 @@
+{
+  "$schema": "https://openclaw.ai/schema/config.json",
+  "agent": {
+    "name": "{{AGENT_NAME}}",
+    "description": "AI Co-founder"
+  },
+  "ai": {
+    "provider": "anthropic",
+    "model": "claude-sonnet-4-20250514",
+    "apiKey": "YOUR_API_KEY_HERE"
+  },
+  "workspace": {
+    "path": "."
+  },
+  "channels": {
+    "slack": {
+      "enabled": false,
+      "provider": "slack",
+      "token": "xoxb-YOUR-BOT-TOKEN",
+      "appToken": "xapp-YOUR-APP-TOKEN",
+      "defaultChannel": "CHANNEL_ID"
+    },
+    "telegram": {
+      "enabled": false,
+      "provider": "telegram",
+      "token": "YOUR-BOT-TOKEN",
+      "allowedChats": []
+    }
+  },
+  "heartbeat": {
+    "enabled": true,
+    "intervalMinutes": 30,
+    "model": "anthropic/claude-haiku-4-5",
+    "prompt": "Read HEARTBEAT.md if it exists (workspace context). Follow it strictly. Do not infer or repeat old tasks from prior chats. If nothing needs attention, reply HEARTBEAT_OK."
+  },
+  "tools": {
+    "web": {
+      "search": {
+        "enabled": true
+      },
+      "fetch": {
+        "enabled": true
+      }
+    }
+  }
+}

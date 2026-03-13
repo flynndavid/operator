@@ -1,0 +1,298 @@
+{
+  "skills": [
+    {
+      "slug": "attendee-communication",
+      "name": "attendee-communication",
+      "description": "# Attendee Communication",
+      "category": "events",
+      "tier": "managed"
+    },
+    {
+      "slug": "brand-strategy",
+      "name": "brand-strategy",
+      "description": "# Brand Strategy",
+      "category": "core",
+      "tier": "pro"
+    },
+    {
+      "slug": "budget-tracking",
+      "name": "budget-tracking",
+      "description": "# Budget Tracking",
+      "category": "events",
+      "tier": "managed"
+    },
+    {
+      "slug": "business-development",
+      "name": "business-development",
+      "description": "Partnership outreach, market research, competitor analysis, and proposal generation. Transform your AI agent into a strategic business development partner that identifies and cultivates growth opportunities.",
+      "category": "core",
+      "tier": "pro"
+    },
+    {
+      "slug": "community-building",
+      "name": "community-building",
+      "description": "# Community Building",
+      "category": "core",
+      "tier": "pro"
+    },
+    {
+      "slug": "crm-in-a-box",
+      "name": "crm-in-a-box",
+      "description": "Bootstrap and manage an open, file-based CRM using the CRM-in-a-Box protocol (contacts, pipeline, interactions as NDJSON). Use when setting up a new CRM for a company, logging contacts/leads, updating deal stages, or recording interactions \u2014 all without any SaaS dependency.",
+      "category": "core",
+      "tier": "starter"
+    },
+    {
+      "slug": "crm-manager",
+      "name": "CRM Manager",
+      "description": "Manages a local CSV-based CRM with pipeline tracking",
+      "category": "core",
+      "tier": "pro"
+    },
+    {
+      "slug": "crm-pipeline",
+      "name": "crm-pipeline",
+      "description": "# CRM Pipeline",
+      "category": "core",
+      "tier": "pro"
+    },
+    {
+      "slug": "day-of-operations",
+      "name": "day-of-operations",
+      "description": "# Day-of Operations",
+      "category": "events",
+      "tier": "managed"
+    },
+    {
+      "slug": "email-drafting",
+      "name": "email-drafting",
+      "description": "# Email Drafting",
+      "category": "core",
+      "tier": "starter"
+    },
+    {
+      "slug": "event-marketing",
+      "name": "event-marketing",
+      "description": "# Event Marketing",
+      "category": "events",
+      "tier": "managed"
+    },
+    {
+      "slug": "event-timeline",
+      "name": "event-timeline",
+      "description": "# Event Timeline Management",
+      "category": "events",
+      "tier": "managed"
+    },
+    {
+      "slug": "financial-overview",
+      "name": "financial-overview",
+      "description": "# Financial Overview",
+      "category": "core",
+      "tier": "starter"
+    },
+    {
+      "slug": "founder-coach",
+      "name": "founder-coach",
+      "description": "# Founder Coach",
+      "category": "strategy",
+      "tier": "starter"
+    },
+    {
+      "slug": "go-to-market",
+      "name": "go-to-market",
+      "description": "# Go-to-Market Strategy",
+      "category": "core",
+      "tier": "pro"
+    },
+    {
+      "slug": "go-to-market-clawhub",
+      "name": "go-to-market",
+      "description": "Build a go-to-market (GTM) strategy for launching a product or entering a new market. Use when planning how to reach customers, position your product, choose channels, set pricing, and execute launch. Covers market entry strategy, customer segmentation, positioning, channel strategy, and GTM execution plan. Trigger on \"go-to-market\", \"GTM strategy\", \"market entry\", \"launch strategy\", \"how to reach customers\", \"GTM plan\".",
+      "category": "core",
+      "tier": "managed"
+    },
+    {
+      "slug": "marketing-article-writing",
+      "name": "article-content",
+      "description": "When the user wants to write, generate, or create article content\u2014blog post body, long-form content, how-to guide, listicle. Also use when the user mentions \"write article,\" \"article content,\" \"blog post content,\" \"article body,\" \"long-form content creation,\" \"generate article,\" \"article draft,\" \"how-to guide content,\" or \"listicle content.\" For article page structure, schema, and SEO metadata, use article-page-generator. For ad copy, landing page copy, or CTAs, use copywriting.",
+      "category": "marketing",
+      "tier": "managed"
+    },
+    {
+      "slug": "marketing-branding",
+      "name": "branding",
+      "description": "When the user wants to define, audit, or apply brand strategy\u2014purpose, values, positioning, storytelling, voice, visual identity. Also use when the user mentions \"brand strategy,\" \"brand story,\" \"brand storytelling,\" \"brand voice,\" \"brand identity,\" \"brand guidelines,\" \"brand purpose,\" \"brand values,\" \"origin story,\" \"brand narrative,\" \"brand personality,\" or \"brand archetype.",
+      "category": "marketing",
+      "tier": "managed"
+    },
+    {
+      "slug": "marketing-cold-start",
+      "name": "cold-start-strategy",
+      "description": "When the user wants to plan cold start, get first users, or launch a new product with zero traction. Also use when the user mentions \"cold start,\" \"cold start problem,\" \"first users,\" \"seed users,\" \"finding users,\" \"finding early users,\" \"Fiverr Upwork,\" \"comment outreach,\" \"Twitter search users,\" \"product launch strategy,\" \"0 to 1 growth,\" \"early-stage acquisition,\" \"launch channels,\" \"get first customers,\" \"Product Hunt launch,\" \"AppSumo,\" \"LTD,\" \"indie hacker,\" \"bootstrapping,\" or \"solo founder.",
+      "category": "marketing",
+      "tier": "managed"
+    },
+    {
+      "slug": "marketing-content-marketing",
+      "name": "content-marketing",
+      "description": "When the user wants to plan content marketing across channels, define content types and formats, or create a content repurposing strategy. Also use when the user mentions \"content marketing strategy,\" \"content types,\" \"content formats,\" \"content repurposing,\" \"content calendar,\" \"content mix,\" \"owned content,\" \"content distribution,\" \"content funnel,\" or \"content planning across channels.",
+      "category": "marketing",
+      "tier": "pro"
+    },
+    {
+      "slug": "marketing-copywriting",
+      "name": "copywriting",
+      "description": "When the user wants to write or optimize marketing copy\u2014headlines, CTAs, ad copy, landing page copy, email copy. Also use when the user mentions \"copywriting,\" \"headline,\" \"CTA copy,\" \"ad copy,\" \"landing page copy,\" \"sales copy,\" \"conversion copy,\" \"PAS,\" \"AIDA,\" \"BAB,\" or \"copy formula.\" For article body content (long-form blog posts, guides), use article-content.",
+      "category": "marketing",
+      "tier": "managed"
+    },
+    {
+      "slug": "marketing-email-marketing",
+      "name": "email-marketing",
+      "description": "When the user wants to plan email marketing, EDM, newsletter strategy, or email deliverability. Also use when the user mentions \"email marketing,\" \"EDM,\" \"newsletter,\" \"SPF,\" \"DKIM,\" \"DMARC,\" \"email deliverability,\" \"email content strategy,\" \"email campaigns,\" \"newsletter strategy,\" \"email automation,\" or \"cold email.",
+      "category": "marketing",
+      "tier": "pro"
+    },
+    {
+      "slug": "marketing-google-ads",
+      "name": "google-ads",
+      "description": "When the user wants to set up, optimize, or manage Google Ads campaigns. Also use when the user mentions \"Google Ads,\" \"Google Search Ads,\" \"PPC,\" \"SEM,\" \"PMF testing with ads,\" \"test product-market fit,\" \"Responsive Search Ads,\" \"RSA,\" \"Performance Max,\" \"Quality Score,\" \"keyword bidding,\" or \"Google Display/YouTube ads.",
+      "category": "marketing",
+      "tier": "managed"
+    },
+    {
+      "slug": "marketing-gtm-launch",
+      "name": "gtm-strategy",
+      "description": "When the user wants to plan go-to-market strategy, GTM framework, or market entry. Also use when the user mentions \"GTM,\" \"go-to-market,\" \"market entry,\" \"new market,\" \"repositioning,\" \"PLG,\" \"sales-led,\" \"product-led,\" \"marketing-led,\" \"ICP,\" \"buyer persona,\" \"GTM motion,\" or \"market expansion.",
+      "category": "marketing",
+      "tier": "managed"
+    },
+    {
+      "slug": "marketing-linkedin",
+      "name": "linkedin-posts",
+      "description": "When the user wants to create LinkedIn post copy or optimize for LinkedIn. Also use when the user mentions \"LinkedIn post,\" \"LinkedIn article,\" \"professional post,\" \"post to LinkedIn,\" \"LinkedIn content,\" \"LinkedIn copy,\" \"B2B LinkedIn,\" \"LinkedIn engagement,\" or \"LinkedIn marketing.",
+      "category": "marketing",
+      "tier": "managed"
+    },
+    {
+      "slug": "marketing-meta-ads",
+      "name": "meta-ads",
+      "description": "When the user wants to set up, optimize, or manage Meta (Facebook/Instagram) Ads. Also use when the user mentions \"Meta Ads,\" \"Facebook Ads,\" \"Instagram Ads,\" \"Meta Pixel,\" \"Conversions API,\" \"Advantage+,\" \"lookalike audience,\" or \"Meta retargeting.",
+      "category": "marketing",
+      "tier": "managed"
+    },
+    {
+      "slug": "marketing-pricing-strategy",
+      "name": "pricing-strategy",
+      "description": "When the user wants to plan, design, or optimize pricing strategy and structure. Also use when the user mentions \"pricing strategy,\" \"pricing model,\" \"pricing tiers,\" \"freemium,\" \"value-based pricing,\" \"anchoring,\" \"price structure,\" or \"monetization strategy.",
+      "category": "marketing",
+      "tier": "managed"
+    },
+    {
+      "slug": "marketing-product-launch",
+      "name": "product-launch",
+      "description": "When the user wants to plan a product launch, execute launch channels, or create a launch checklist. Also use when the user mentions \"product launch,\" \"launch strategy,\" \"product announcement,\" \"launch channels,\" or \"market launch.\" For GTM strategy framework (modes, 90-day, ICP, new market, repositioning), use gtm-strategy.",
+      "category": "marketing",
+      "tier": "managed"
+    },
+    {
+      "slug": "marketing-seo-audit",
+      "name": "seo-audit",
+      "description": "When the user wants to run an SEO audit, technical SEO audit, or site health check. Also use when the user mentions \"SEO audit,\" \"technical audit,\" \"site audit,\" \"crawl audit,\" \"indexing audit,\" \"SEO health,\" or \"fix SEO issues.",
+      "category": "marketing",
+      "tier": "managed"
+    },
+    {
+      "slug": "marketing-seo-monitoring",
+      "name": "seo-monitoring",
+      "description": "When the user wants to build an SEO data analysis system, monitor indexing/traffic/keywords/backlinks, or set up benchmarks. Also use when the user mentions \"SEO data analysis,\" \"SEO monitoring,\" \"article database,\" \"traffic benchmark,\" \"penalty recovery,\" \"SEO work document,\" \"SEO dashboard,\" \"keyword tracking,\" \"ranking monitoring,\" \"indexing report,\" or \"backlink monitoring.",
+      "category": "marketing",
+      "tier": "managed"
+    },
+    {
+      "slug": "marketing-seo-strategy",
+      "name": "seo-strategy",
+      "description": "When the user wants to plan SEO strategy, prioritize SEO work, or understand the SEO workflow. Also use when the user mentions \"SEO strategy,\" \"SEO plan,\" \"SEO roadmap,\" \"SEO priority,\" \"SEO audit,\" \"SEO workflow,\" \"where to start SEO,\" \"SEO approach,\" \"organic growth strategy,\" \"why SEO,\" \"SEO value,\" or \"search strategy.",
+      "category": "marketing",
+      "tier": "pro"
+    },
+    {
+      "slug": "marketing-x-twitter",
+      "name": "twitter-x-posts",
+      "description": "When the user wants to create X (Twitter) post copy, threads, or optimize for X platform. Also use when the user mentions \"X post,\" \"X thread,\" \"Twitter post,\" \"Twitter thread,\" \"tweet,\" \"tweet copy,\" \"thread,\" \"X marketing,\" \"X content,\" \"post to X,\" \"create X post,\" or \"X post copy.",
+      "category": "marketing",
+      "tier": "managed"
+    },
+    {
+      "slug": "meeting-prep",
+      "name": "meeting-prep",
+      "description": "# Meeting Prep",
+      "category": "core",
+      "tier": "starter"
+    },
+    {
+      "slug": "post-event-debrief",
+      "name": "post-event-debrief",
+      "description": "# Post-Event Debrief",
+      "category": "events",
+      "tier": "managed"
+    },
+    {
+      "slug": "relationship-tracking",
+      "name": "relationship-tracking",
+      "description": "# Relationship Tracking",
+      "category": "core",
+      "tier": "starter"
+    },
+    {
+      "slug": "sales-outreach",
+      "name": "sales-outreach",
+      "description": "# Sales Outreach",
+      "category": "core",
+      "tier": "pro"
+    },
+    {
+      "slug": "sales-pipeline",
+      "name": "Sales Pipeline Tracker",
+      "description": "Track deals through every stage from lead to close. Manage pipeline stages, update deal status, forecast revenue, and identify bottlenecks in your sales process.",
+      "category": "core",
+      "tier": "pro"
+    },
+    {
+      "slug": "social-media-management",
+      "name": "social-media-management",
+      "description": "# Social Media Management",
+      "category": "core",
+      "tier": "pro"
+    },
+    {
+      "slug": "sponsorship-management",
+      "name": "sponsorship-management",
+      "description": "# Sponsorship Management",
+      "category": "events",
+      "tier": "managed"
+    },
+    {
+      "slug": "strategic-advisor",
+      "name": "strategic-advisor",
+      "description": "# Strategic Advisor",
+      "category": "strategy",
+      "tier": "starter"
+    },
+    {
+      "slug": "task-management",
+      "name": "task-management",
+      "description": "# Task Management",
+      "category": "core",
+      "tier": "starter"
+    },
+    {
+      "slug": "vendor-management",
+      "name": "vendor-management",
+      "description": "# Vendor Management",
+      "category": "events",
+      "tier": "managed"
+    }
+  ]
+}
