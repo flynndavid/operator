@@ -302,8 +302,15 @@ fi
 # 5) Replace placeholders across md/json
 info "Replacing placeholders..."
 ONBOARD_DATE=$(date +%Y-%m-%d)
+# Detect sed in-place syntax (macOS vs Linux)
+if sed --version 2>/dev/null | grep -q GNU; then
+  SED_INPLACE=(sed -i)
+else
+  SED_INPLACE=(sed -i '')
+fi
+
 find "$DEPLOY_DIR" \( -name "*.md" -o -name "*.json" \) -print0 | while IFS= read -r -d '' file; do
-  sed -i '' \
+  "${SED_INPLACE[@]}" \
     -e "s|{{CLIENT_NAME}}|$CLIENT_NAME|g" \
     -e "s|{{CONTACT_NAME}}|$CONTACT_NAME|g" \
     -e "s|{{CONTACT_TIMEZONE}}|$CONTACT_TIMEZONE|g" \
