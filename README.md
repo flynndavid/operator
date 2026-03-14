@@ -1,8 +1,8 @@
-# Operator
+# OperatorOS
 
 **Your AI co-founder** — built on [OpenClaw](https://openclaw.ai).
 
-Operator is a productized agent template that turns a fresh OpenClaw instance into an always-on business partner. It comes with 49 skills spanning CRM, strategy, marketing, operations, and more — organized into tiers (Starter, Pro, Managed) so you deploy exactly what the client needs.
+OperatorOS is a productized agent template that turns a fresh OpenClaw instance into an always-on business partner. It comes with 49 skills spanning CRM, strategy, marketing, operations, and more — organized into tiers (Starter, Pro, Managed) so you deploy exactly what the client needs.
 
 ## Quick Start
 
@@ -89,5 +89,5 @@ operator/
 ## Docs
 
 - [Setup Guide](docs/setup-guide.md) — Full step-by-step deployment walkthrough
-- [Architecture](docs/architecture.md) — How Operator is structured
+- [Architecture](docs/architecture.md) — How OperatorOS is structured
 - [Onboarding Flow](docs/onboarding.md) — What happens on first boot
