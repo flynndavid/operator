@@ -232,6 +232,13 @@ info "Vertical:     ${VERTICAL:-none}"
 info "Output:       $DEPLOY_DIR"
 echo ""
 
+# Rollback on failure — remove partial deployment
+cleanup_on_error() {
+  err "Provisioning failed — cleaning up partial deployment at $DEPLOY_DIR"
+  rm -rf "$DEPLOY_DIR"
+}
+trap cleanup_on_error ERR
+
 mkdir -p "$DEPLOY_DIR"
 
 # 1) Base agent files
@@ -239,15 +246,7 @@ info "Copying agent config files..."
 cp -R "$AGENT_DIR"/* "$DEPLOY_DIR/"
 ok "Agent files copied"
 
-# 2) Copy BOOTSTRAP.md (first-boot onboarding trigger)
-if [[ -f "$AGENT_DIR/BOOTSTRAP.md" ]]; then
-  cp "$AGENT_DIR/BOOTSTRAP.md" "$DEPLOY_DIR/BOOTSTRAP.md"
-  ok "BOOTSTRAP.md copied (will trigger onboarding on first boot)"
-else
-  warn "No BOOTSTRAP.md found in $AGENT_DIR — onboarding trigger skipped"
-fi
-
-# 3) Skills (based on profile)
+# 2) Skills (based on profile)
 info "Installing skills ($SKILL_COUNT from $PROFILE profile)..."
 mkdir -p "$DEPLOY_DIR/skills"
 python3 - <<PY
