@@ -5,11 +5,11 @@ set -euo pipefail
 # Operator — One-Command Installer
 # ============================================================
 #
-# Usage:
-#   curl -sL https://operatorosagent.com/install.sh | bash
+# Usage (interactive — recommended):
+#   bash <(curl -sL https://operatorosagent.com/install.sh)
 #
-# Or with flags:
-#   curl -sL https://operatorosagent.com/install.sh | bash -s -- \
+# Or with flags (non-interactive):
+#   bash <(curl -sL https://operatorosagent.com/install.sh) \
 #     --client "My Business" --contact "Jane" --agent-name "Scout"
 #
 # What it does:
@@ -68,7 +68,7 @@ while [[ $# -gt 0 ]]; do
     --help|-h)
       echo "Operator Installer v${VERSION}"
       echo ""
-      echo "Usage: curl -sL https://operatorosagent.com/install.sh | bash"
+      echo "Usage: bash <(curl -sL https://operatorosagent.com/install.sh)"
       echo ""
       echo "Options:"
       echo "  --key KEY           License key from purchase (determines tier)"
@@ -182,7 +182,7 @@ if [[ -n "$LICENSE_KEY" ]]; then
       echo "  Or install the free starter tier without a key."
       echo ""
       printf "${BOLD}Continue with free starter tier? (Y/n):${NC} "
-      read -r fallback </dev/tty || fallback=""
+      read -r fallback <&3 || fallback=""
       if [[ "$fallback" =~ ^[Nn] ]]; then
         echo "Cancelled."
         exit 1
@@ -204,6 +204,15 @@ fi
 header "Let's set up your AI co-founder."
 echo ""
 
+# Open a file descriptor for user input.
+# /dev/tty works on real terminals; fall back to stdin (fd 0) when
+# running inside containers that lack /dev/tty.
+if [[ -e /dev/tty ]]; then
+  exec 3</dev/tty
+else
+  exec 3<&0
+fi
+
 # Function to prompt with default
 ask() {
   local prompt="$1"
@@ -221,7 +230,7 @@ ask() {
     printf "${BOLD}${prompt}${NC}: "
   fi
 
-  read -r input </dev/tty || input=""
+  read -r input <&3 || input=""
   if [[ -z "$input" ]]; then
     printf -v "$var_name" '%s' "$default"
   else
@@ -268,7 +277,7 @@ echo ""
 
 if [[ "$SKIP_INTERACTIVE" != true ]]; then
   printf "${BOLD}Look good? (Y/n):${NC} "
-  read -r confirm </dev/tty || confirm=""
+  read -r confirm <&3 || confirm=""
   if [[ "$confirm" =~ ^[Nn] ]]; then
     echo "Cancelled."
     exit 0
