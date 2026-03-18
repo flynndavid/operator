@@ -6,10 +6,10 @@ set -euo pipefail
 # ============================================================
 #
 # Usage:
-#   curl -sL https://operator-landing-alpha.vercel.app/install.sh | bash
+#   curl -sL https://operatorosagent.com/install.sh | bash
 #
 # Or with flags:
-#   curl -sL https://operator-landing-alpha.vercel.app/install.sh | bash -s -- \
+#   curl -sL https://operatorosagent.com/install.sh | bash -s -- \
 #     --client "My Business" --contact "Jane" --agent-name "Scout"
 #
 # What it does:
@@ -23,7 +23,7 @@ set -euo pipefail
 VERSION="1.1.0"
 REPO_URL="https://github.com/flynndavid/operator.git"
 REPO_BRANCH="main"
-VALIDATE_URL="https://operator-landing-alpha.vercel.app/api/validate-key"
+VALIDATE_URL="https://operatorosagent.com/api/validate-key"
 
 # --- Colors ---
 RED='\033[0;31m'
@@ -68,7 +68,7 @@ while [[ $# -gt 0 ]]; do
     --help|-h)
       echo "Operator Installer v${VERSION}"
       echo ""
-      echo "Usage: curl -sL https://operator-landing-alpha.vercel.app/install.sh | bash"
+      echo "Usage: curl -sL https://operatorosagent.com/install.sh | bash"
       echo ""
       echo "Options:"
       echo "  --key KEY           License key from purchase (determines tier)"
@@ -137,7 +137,7 @@ if [[ -z "$CONTACT_TIMEZONE" ]]; then
     CONTACT_TIMEZONE=$(cat /etc/timezone 2>/dev/null || echo "")
   fi
   if [[ -z "$CONTACT_TIMEZONE" ]] && command -v python3 &>/dev/null; then
-    CONTACT_TIMEZONE=$(python3 -c "import time; import datetime; print(datetime.datetime.now().astimezone().tzinfo)" 2>/dev/null || echo "")
+    CONTACT_TIMEZONE=$(python3 -c "import datetime; print(datetime.datetime.now().astimezone().tzname())" 2>/dev/null || echo "")
   fi
   # macOS
   if [[ -z "$CONTACT_TIMEZONE" ]] && [[ -L /etc/localtime ]]; then
@@ -148,11 +148,7 @@ fi
 
 # Detect workspace
 if [[ -z "$WORKSPACE_DIR" ]]; then
-  if [[ -d "$HOME/.openclaw/workspace" ]]; then
-    WORKSPACE_DIR="$HOME/.openclaw/workspace"
-  else
-    WORKSPACE_DIR="$HOME/.openclaw/workspace"
-  fi
+  WORKSPACE_DIR="$HOME/.openclaw/workspace"
 fi
 
 # ============================================================
@@ -182,7 +178,7 @@ if [[ -n "$LICENSE_KEY" ]]; then
       KEY_ERROR=$(echo "$VALIDATE_RESPONSE" | python3 -c "import sys,json; print(json.load(sys.stdin).get('error','Invalid key'))" 2>/dev/null || echo "Invalid key")
       err "License key validation failed: ${KEY_ERROR}"
       echo ""
-      echo "  Get a license key at: https://operator-landing-alpha.vercel.app/#pricing (Starter $199 / Pro $249/mo)"
+      echo "  Get a license key at: https://operatorosagent.com/#pricing (Starter $199 / Pro $249/mo)"
       echo "  Or install the free starter tier without a key."
       echo ""
       printf "${BOLD}Continue with free starter tier? (Y/n):${NC} "
@@ -231,13 +227,13 @@ ask() {
   if [[ -t 0 ]]; then
     read -r input
     if [[ -z "$input" ]]; then
-      eval "$var_name='$default'"
+      printf -v "$var_name" '%s' "$default"
     else
-      eval "$var_name='$input'"
+      printf -v "$var_name" '%s' "$input"
     fi
   else
     # Piped input (curl | bash) — use defaults
-    eval "$var_name='$default'"
+    printf -v "$var_name" '%s' "$default"
     echo "${default:-}"
   fi
 }
@@ -256,7 +252,10 @@ fi
 
 ask "Name for your AI agent?" "Operator" AGENT_NAME
 ask "Your timezone?" "$CONTACT_TIMEZONE" CONTACT_TIMEZONE
-ask "Plan (starter/pro/managed)?" "$PROFILE" PROFILE
+# Only prompt for plan if no license key was provided (key sets tier automatically)
+if [[ -z "$LICENSE_KEY" ]]; then
+  ask "Plan (starter/pro/managed)?" "$PROFILE" PROFILE
+fi
 
 echo ""
 
@@ -346,6 +345,6 @@ echo ""
 printf "  ${BOLD}4.${NC} Send your first message — ${BOLD}%s${NC} will introduce itself\n" "$AGENT_NAME"
 dim "     and walk you through a 10-minute onboarding conversation."
 echo ""
-dim "  Docs: https://operator-landing-alpha.vercel.app/install"
+dim "  Docs: https://operatorosagent.com/install"
 dim "  Help: https://discord.com/invite/clawd"
 echo ""
