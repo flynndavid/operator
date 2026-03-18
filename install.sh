@@ -182,12 +182,10 @@ if [[ -n "$LICENSE_KEY" ]]; then
       echo "  Or install the free starter tier without a key."
       echo ""
       printf "${BOLD}Continue with free starter tier? (Y/n):${NC} "
-      if [[ -t 0 ]]; then
-        read -r fallback
-        if [[ "$fallback" =~ ^[Nn] ]]; then
-          echo "Cancelled."
-          exit 1
-        fi
+      read -r fallback </dev/tty || fallback=""
+      if [[ "$fallback" =~ ^[Nn] ]]; then
+        echo "Cancelled."
+        exit 1
       fi
       PROFILE="starter"
       warn "Continuing with starter tier (12 skills)"
@@ -223,18 +221,11 @@ ask() {
     printf "${BOLD}${prompt}${NC}: "
   fi
 
-  # Check if stdin is a terminal
-  if [[ -t 0 ]]; then
-    read -r input
-    if [[ -z "$input" ]]; then
-      printf -v "$var_name" '%s' "$default"
-    else
-      printf -v "$var_name" '%s' "$input"
-    fi
-  else
-    # Piped input (curl | bash) — use defaults
+  read -r input </dev/tty || input=""
+  if [[ -z "$input" ]]; then
     printf -v "$var_name" '%s' "$default"
-    echo "${default:-}"
+  else
+    printf -v "$var_name" '%s' "$input"
   fi
 }
 
@@ -275,9 +266,9 @@ if [[ -n "$VERTICAL" ]]; then
 fi
 echo ""
 
-if [[ "$SKIP_INTERACTIVE" != true ]] && [[ -t 0 ]]; then
+if [[ "$SKIP_INTERACTIVE" != true ]]; then
   printf "${BOLD}Look good? (Y/n):${NC} "
-  read -r confirm
+  read -r confirm </dev/tty || confirm=""
   if [[ "$confirm" =~ ^[Nn] ]]; then
     echo "Cancelled."
     exit 0
