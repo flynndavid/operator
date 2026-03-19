@@ -35,3 +35,42 @@ This repo is intentionally a **monorepo** so skills, agent configuration, deploy
 - Production-ready provisioning and onboarding flow
 - Keep the monorepo clean and portable
 - Defer Stripe wiring until GTM is ready
+
+## Session Log
+
+### 2026-03-18 — Install Script Audit & Fixes
+
+#### PRs Merged
+
+1. **operator PR #6** — `fix: security + bug fixes in install scripts`
+   - Replaced `eval` with `printf -v` in install.sh `ask()` to prevent shell injection
+   - Fixed timezone detection: Python fallback returns IANA string instead of tzinfo object
+   - Removed dead code: workspace detection had identical if/else branches
+   - Fixed tier override bug: plan prompt no longer shown when license key sets tier
+   - Removed duplicate BOOTSTRAP.md copy in setup.sh
+   - Updated all URLs from alpha domain to operatorosagent.com
+   - Added rollback trap in setup.sh for partial deployment cleanup
+
+2. **operator PR #7** — `fix: read from /dev/tty so curl|bash prompts work`
+   - Changed all `read` calls to use `</dev/tty` for curl|bash compatibility
+
+3. **operator PR #8** — `fix: robust interactive input for curl|bash and containers`
+   - Opens fd 3 from `/dev/tty` with fallback to stdin for no-tty containers
+   - All `read` calls use `<&3`
+   - Updated usage docs to recommend `bash <(curl ...)` pattern
+
+4. **AutomaticOS PR #1** — `docs: install script audit plan and improvement roadmap`
+   - Added Install-Script-Plan.md with full audit findings and phased roadmap
+
+#### Install Command (tested working)
+
+```bash
+bash <(curl -sL https://raw.githubusercontent.com/flynndavid/operator/main/install.sh)
+```
+
+#### Known State
+
+- GitHub PAT configured for `flynndavid` account (saved in gh CLI)
+- Git proxy at 127.0.0.1:34159 handles push/pull for all 3 repos
+- Repos: operator, AutomaticOS, operator-platform (all under flynndavid/)
+- Branch pattern: `claude/review-operator-install-script-u5uxg`

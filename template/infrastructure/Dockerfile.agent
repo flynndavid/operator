@@ -1,0 +1,23 @@
+# OperatorOS Agent Base Image
+# Pre-installs OpenClaw so containers start faster (no npm install on boot).
+#
+# Build:  docker build -t operatoros/agent-base:latest -f template/infrastructure/Dockerfile.agent .
+# Usage:  docker run -d -v /path/to/workspace:/workspace operatoros/agent-base:latest
+
+FROM node:20-slim
+
+# Install OpenClaw CLI globally
+RUN npm install -g openclaw && npm cache clean --force
+
+# Install git (needed for some skills that fetch resources)
+RUN apt-get update && apt-get install -y --no-install-recommends git curl && \
+    rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workspace
+
+EXPOSE 3000
+
+HEALTHCHECK --interval=60s --timeout=10s --start-period=30s --retries=3 \
+  CMD openclaw status || exit 1
+
+CMD ["openclaw", "gateway", "start", "--foreground"]
