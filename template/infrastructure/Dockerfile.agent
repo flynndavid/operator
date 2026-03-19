@@ -6,12 +6,12 @@
 
 FROM node:20-slim
 
-# Install OpenClaw CLI globally
-RUN npm install -g openclaw && npm cache clean --force
-
-# Install git (needed for some skills that fetch resources)
+# Install system deps first (git is required by openclaw's npm install)
 RUN apt-get update && apt-get install -y --no-install-recommends git curl && \
     rm -rf /var/lib/apt/lists/*
+
+# Install OpenClaw CLI globally (pinned version for reproducibility)
+RUN npm install -g openclaw@2026.3.13 && npm cache clean --force
 
 WORKDIR /workspace
 
